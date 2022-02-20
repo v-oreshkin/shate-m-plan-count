@@ -8,6 +8,9 @@ class CurrentStatisticsModel extends ChangeNotifier{
   List<DailyPlan> _dailyPlanList = [];
   List<DailyPlan> get dailyPlan => _dailyPlanList;
   int planSum = 0;
+  int salary = 0;
+  static const double generalFloorPrice = 0.033;
+  static const double firstFloorPrice = 0.086;
 
   CurrentStatisticsModel(){
     _setup();
@@ -15,7 +18,9 @@ class CurrentStatisticsModel extends ChangeNotifier{
   void _setup() async{
     final box = await Hive.openBox<DailyPlan>(HiveBox.dailyPlanBox);
     _getValues(box);
+    _setSalary(box);
    box.listenable().addListener(() {
+     _setSalary(box);
      _getValues(box);
    });
   }
@@ -26,6 +31,18 @@ class CurrentStatisticsModel extends ChangeNotifier{
         planSum += plan.plan;
     }
       notifyListeners();
+  }
+  void _setSalary(Box<DailyPlan> box){
+    _dailyPlanList = box.values.toList();
+    salary = 0;
+    for(DailyPlan plan in _dailyPlanList){
+      if(plan.floor == 1){
+        salary += (plan.plan * firstFloorPrice).toInt();
+      }else{
+        salary +=(plan.plan * generalFloorPrice).toInt();
+      }
+    }
+    notifyListeners();
   }
 }
 

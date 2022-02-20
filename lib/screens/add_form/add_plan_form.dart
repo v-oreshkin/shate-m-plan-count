@@ -19,10 +19,7 @@ class _AddPlanFormState extends State<AddPlanForm> {
           title: const Text('Add plan'),
         ),
         body: AddFormModelProvider(
-            model: model,
-            child: const _AddPlanFormBody()
-        )
-    );
+            model: model, child: const _AddPlanFormBody()));
   }
 }
 
@@ -33,20 +30,40 @@ class _AddPlanFormBody extends StatelessWidget {
   Widget build(BuildContext context) {
     var inheritModel = AddFormModelProvider.obtain(context).model;
     int userInput = 0;
-    var focus = FocusNode();
+    _selectedDate(BuildContext context) async {
+      final DateTime? picker = await showDatePicker(
+          context: context,
+          locale: const Locale('en', 'GB'),
+          initialDate: DateTime.now(),
+          firstDate: DateTime(2022),
+          lastDate: DateTime(2050));
+      inheritModel.time = picker.toString();
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           TextField(
-            focusNode: focus,
+            style: const TextStyle(fontSize: 22),
+            cursorHeight: 22,
             autofocus: true,
             keyboardType: TextInputType.number,
-            decoration: const InputDecoration(border: OutlineInputBorder()),
+            decoration: InputDecoration(
+                isCollapsed: true,
+                suffix: IconButton(
+                    onPressed: () {
+                      _selectedDate(context);
+                    },
+                    icon: Icon(
+                        Icons.calendar_today_outlined,
+                        size: 22,
+                        color: Theme.of(context).colorScheme.primary)
+                ),
+                border: const OutlineInputBorder()),
             onSubmitted: (userInput) {
               inheritModel.plan = int.parse(userInput);
-              focus.unfocus();
             },
             onChanged: (userInputLocal) {
               userInput = int.parse(userInputLocal);
@@ -99,23 +116,16 @@ class _PopupChooseFloorState extends State<_PopupChooseFloor> {
       height: 30,
       width: 100,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(3),
-        border: Border.all(
-          width: 2,
-          color: ThemeData().colorScheme.primary
-        )
-      ),
+          borderRadius: BorderRadius.circular(3),
+          border: Border.all(width: 2, color: ThemeData().colorScheme.primary)),
       child: PopupMenuButton(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10))
-        ),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))),
           onSelected: (val) {
             model.floor = val as int;
           },
-          child: Text(
-              (floor == null) ? 'Choose floor' : '$floor',
-            style: textStyle
-          ),
+          child: Text((floor == null) ? 'Choose floor' : '$floor',
+              style: textStyle),
           itemBuilder: (context) => <PopupMenuItem>[
                 buildPopupMenuItem(1),
                 buildPopupMenuItem(2),
@@ -134,10 +144,9 @@ class _PopupChooseFloorState extends State<_PopupChooseFloor> {
           });
         },
         child: Text(
-            '$localFloor',
+          '$localFloor',
           style: textStyle,
         ),
-        value: localFloor
-    );
+        value: localFloor);
   }
 }

@@ -67,7 +67,19 @@ class _HistoryBodyRow extends StatelessWidget {
       child: ListTile(
           title: Text("${plan?.plan}"),
           subtitle: Text("${plan?.date}"),
-          trailing: Text('${plan?.floor}')
+          trailing: FittedBox(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                    '${plan?.floor}',
+                  style: const TextStyle(
+                    fontSize: 18
+                  ),
+                ),
+              ],
+            ),
+          )
       ),
     );
   }

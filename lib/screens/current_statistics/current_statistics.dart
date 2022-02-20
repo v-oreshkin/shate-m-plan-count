@@ -40,6 +40,7 @@ class Statistics extends StatelessWidget {
   Widget build(BuildContext context) {
     var model = CurrentStatisticsModelProvider.watch(context)?.model;
     var sum = model?.planSum;
+    var salary = model?.salary;
     return UnconstrainedBox(
       constrainedAxis: Axis.horizontal,
       child: Card(
@@ -47,9 +48,11 @@ class Statistics extends StatelessWidget {
           child: Column(children: [
             Image.asset('assets/logo/logo.png'),
             sizedBox25,
-            const Text("You have to do : 10000"),
+            const Text("Month plan : 10000"),
             sizedBox25,
-            Text('You have made : $sum'),
+            Text('My current plan : $sum'),
+            sizedBox25,
+            Text('Earn : $salary'),
             sizedBox25,
             ElevatedButton(
                 onPressed: () {

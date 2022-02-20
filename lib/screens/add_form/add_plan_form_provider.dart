@@ -6,7 +6,7 @@ import 'package:shate_m_plan_count/domain/models/daily_plan_model.dart';
 class AddFormModel extends ChangeNotifier{
   int plan = 0;
   int floor = 0;
-  DateTime time = DateTime.now();
+  String time = '';
 
   void addValue(BuildContext context) async {
     DailyPlan dailyPlan =
