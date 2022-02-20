@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shate_m_plan_count/domain/pages_path.dart';
 
 class CurrentStatistics extends StatefulWidget {
   const CurrentStatistics({Key? key}) : super(key: key);
@@ -16,7 +17,9 @@ class _CurrentStatisticsState extends State<CurrentStatistics> {
       ),
       body: const Statistics(),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
+        onPressed: (){
+          Navigator.of(context).pushNamed(PagesPath.addPlanForm);
+        },
         child: const Icon(Icons.add)
       )
     );
