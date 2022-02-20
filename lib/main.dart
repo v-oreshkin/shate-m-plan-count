@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shate_m_plan_count/screens/main_screen.dart';
+import 'package:shate_m_plan_count/screens/current_statistics/current_statistics.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,8 +13,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Shate-M plan count',
-      theme: ThemeData.dark(),
-      home: const MainScreen(),
+      theme: ThemeData.light(),
+      home: const CurrentStatistics(),
     );
   }
 }
