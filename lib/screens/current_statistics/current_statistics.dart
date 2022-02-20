@@ -52,7 +52,9 @@ class Statistics extends StatelessWidget {
             Text('You have made : $sum'),
             sizedBox25,
             ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(PagesPath.history);
+                },
                 child: const Text('Look history')
             ),
             sizedBox25

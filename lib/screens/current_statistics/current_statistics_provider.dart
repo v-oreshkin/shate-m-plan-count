@@ -16,12 +16,12 @@ class CurrentStatisticsModel extends ChangeNotifier{
     final box = await Hive.openBox<DailyPlan>(HiveBox.dailyPlanBox);
     _getValues(box);
    box.listenable().addListener(() {
-     planSum = 0;
      _getValues(box);
    });
   }
   void _getValues(Box<DailyPlan> box){
     _dailyPlanList = box.values.toList();
+    planSum = 0;
       for(DailyPlan plan in _dailyPlanList){
         planSum += plan.plan;
     }
