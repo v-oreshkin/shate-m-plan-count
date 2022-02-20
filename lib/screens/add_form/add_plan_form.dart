@@ -39,7 +39,6 @@ class _AddPlanFormBody extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          //TODO Add DatePicker
           TextField(
             focusNode: focus,
             autofocus: true,
@@ -47,7 +46,7 @@ class _AddPlanFormBody extends StatelessWidget {
             decoration: const InputDecoration(border: OutlineInputBorder()),
             onSubmitted: (userInput) {
               inheritModel.plan = int.parse(userInput);
-              inheritModel.addValue(context,focus);
+              focus.unfocus();
             },
             onChanged: (userInputLocal) {
               userInput = int.parse(userInputLocal);

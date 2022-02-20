@@ -3,20 +3,17 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shate_m_plan_count/domain/hive_box_name.dart';
 import 'package:shate_m_plan_count/domain/models/daily_plan_model.dart';
 
-class AddFormModel {
+class AddFormModel extends ChangeNotifier{
   int plan = 0;
   int floor = 0;
   DateTime time = DateTime.now();
 
-  void addValue(BuildContext context, [FocusNode? focusNode]) async {
+  void addValue(BuildContext context) async {
     DailyPlan dailyPlan =
         DailyPlan(plan, floor, time.toString().substring(0, 10));
     await Hive.box<DailyPlan>(HiveBox.dailyPlanBox).add(dailyPlan);
-    if (focusNode != null) {
-      focusNode.unfocus();
-    } else {
-      Navigator.pop(context);
-    }
+    notifyListeners();
+    Navigator.pop(context);
   }
 }
 
@@ -32,7 +29,8 @@ class AddFormModelProvider extends InheritedWidget {
       ?.widget as AddFormModelProvider;
 
   @override
-  bool updateShouldNotify(AddFormModelProvider old) {
+  bool updateShouldNotify(covariant AddFormModelProvider oldWidget) {
     return true;
   }
+
 }
