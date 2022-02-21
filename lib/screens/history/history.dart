@@ -25,6 +25,8 @@ class _HistoryBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO scroll controller
+    var controller = ScrollController();
     var model = HistoryModelProvider.watch(context)?.model;
     int? itemLength =
         model?.dailyPlanList.length;
@@ -37,6 +39,7 @@ class _HistoryBody extends StatelessWidget {
             icon: const Icon(Icons.delete_rounded))
       ]),
       body: ListView.separated(
+        controller: controller,
           itemBuilder: (context, index) =>
               _HistoryBodyRow(dailyPlanIndex: index),
           separatorBuilder: (context, index) => const Divider(),
