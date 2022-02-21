@@ -24,6 +24,11 @@ void _setup() async{
   });
 }
 
+void clearBox() async{
+  await Hive.box<DailyPlan>(HiveBox.dailyPlanBox).clear();
+  notifyListeners();
+}
+
 void deletePlan(int index) async{
   await Hive.box<DailyPlan>(HiveBox.dailyPlanBox).deleteAt(index);
 }

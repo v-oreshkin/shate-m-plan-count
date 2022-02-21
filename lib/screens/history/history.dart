@@ -13,14 +13,9 @@ class _HistoryState extends State<History> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-            title: const Text('History')
-        ),
-        body: HistoryModelProvider(
-            model: model,
-            child: const _HistoryBody()
-        )
+    return HistoryModelProvider(
+        model: model,
+        child: const _HistoryBody()
     );
   }
 }
@@ -30,13 +25,22 @@ class _HistoryBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int? itemLength = HistoryModelProvider
-        .watch(context)
-        ?.model.dailyPlanList.length;
-    return ListView.separated(
-        itemBuilder: (context, index) => _HistoryBodyRow(dailyPlanIndex: index),
-        separatorBuilder: (context, index) => const Divider(),
-        itemCount: itemLength!
+    var model = HistoryModelProvider.watch(context)?.model;
+    int? itemLength =
+        model?.dailyPlanList.length;
+    return Scaffold(
+      appBar: AppBar(title: const Text('History'), actions: [
+        IconButton(
+            onPressed: () {
+              model?.clearBox();
+            },
+            icon: const Icon(Icons.delete_rounded))
+      ]),
+      body: ListView.separated(
+          itemBuilder: (context, index) =>
+              _HistoryBodyRow(dailyPlanIndex: index),
+          separatorBuilder: (context, index) => const Divider(),
+          itemCount: itemLength!),
     );
   }
 }
@@ -49,19 +53,16 @@ class _HistoryBodyRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var plan = HistoryModelProvider
-        ?.watch(context)
+    var plan = HistoryModelProvider?.watch(context)
         ?.model
         .dailyPlanList[dailyPlanIndex];
-    var model = HistoryModelProvider
-        ?.watch(context)
-        ?.model;
+    var model = HistoryModelProvider?.watch(context)?.model;
     return Dismissible(
       background: const ColoredBox(
         color: Colors.red,
       ),
-      onDismissed: (direction){
-       model?.deletePlan(dailyPlanIndex);
+      onDismissed: (direction) {
+        model?.deletePlan(dailyPlanIndex);
       },
       key: ValueKey(dailyPlanIndex),
       child: ListTile(
@@ -72,19 +73,12 @@ class _HistoryBodyRow extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                    '${plan?.floor}',
-                  style: const TextStyle(
-                    fontSize: 18
-                  ),
+                  '${plan?.floor}',
+                  style: const TextStyle(fontSize: 18),
                 ),
               ],
             ),
-          )
-      ),
+          )),
     );
   }
 }
-
-
-
-

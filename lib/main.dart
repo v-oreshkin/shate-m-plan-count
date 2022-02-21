@@ -9,11 +9,10 @@ import 'package:shate_m_plan_count/screens/history/history.dart';
 
 import 'domain/models/daily_plan_model.dart';
 
-void main() async{
+void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(DailyPlanAdapter());
   await Hive.openBox<DailyPlan>(HiveBox.dailyPlanBox);
-  await Hive.box<DailyPlan>(HiveBox.dailyPlanBox).clear();
   runApp(const MyApp());
 }
 
@@ -25,20 +24,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Shate-M plan count',
       initialRoute: PagesPath.currentStatistics,
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('en', ''), // English, no country code
-          Locale('en', 'GB'), // Spanish, no country code
-        ],
       routes: {
-        PagesPath.currentStatistics:(context)=>const CurrentStatistics(),
-        PagesPath.addPlanForm:(context)=> const AddPlanForm(),
-        PagesPath.history:(context)=> const History()
-      }
+        PagesPath.currentStatistics: (context) => const CurrentStatistics(),
+        PagesPath.addPlanForm: (context) => const AddPlanForm(),
+        PagesPath.history: (context) => const History()
+      },
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', ''),
+        Locale('en','GB')
+      ],
     );
   }
 }
