@@ -45,26 +45,32 @@ class _HistoryBody extends StatelessWidget {
   }
 }
 
-class _HistoryBodyRow extends StatelessWidget {
+class _HistoryBodyRow extends StatefulWidget {
   final int dailyPlanIndex;
 
   const _HistoryBodyRow({Key? key, required this.dailyPlanIndex})
       : super(key: key);
 
   @override
+  State<_HistoryBodyRow> createState() => _HistoryBodyRowState();
+}
+
+class _HistoryBodyRowState extends State<_HistoryBodyRow> {
+  @override
   Widget build(BuildContext context) {
     var plan = HistoryModelProvider?.watch(context)
         ?.model
-        .dailyPlanList[dailyPlanIndex];
+        .dailyPlanList[widget.dailyPlanIndex];
     var model = HistoryModelProvider?.watch(context)?.model;
     return Dismissible(
       background: const ColoredBox(
         color: Colors.red,
       ),
       onDismissed: (direction) {
-        model?.deletePlan(dailyPlanIndex);
+        model?.deletePlan(widget.dailyPlanIndex);
+        setState(() {});
       },
-      key: ValueKey(dailyPlanIndex),
+      key: ValueKey(widget.dailyPlanIndex),
       child: ListTile(
           title: Text("${plan?.plan}"),
           subtitle: Text("${plan?.date}"),

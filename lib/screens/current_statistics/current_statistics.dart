@@ -30,38 +30,49 @@ class _CurrentStatisticsState extends State<CurrentStatistics> {
   }
 }
 
-class Statistics extends StatelessWidget {
+class Statistics extends StatefulWidget {
   const Statistics({Key? key}) : super(key: key);
   static const sizedBox25 = SizedBox(
     height: 25,
   );
 
   @override
+  State<Statistics> createState() => _StatisticsState();
+}
+
+class _StatisticsState extends State<Statistics> {
+  @override
   Widget build(BuildContext context) {
     var model = CurrentStatisticsModelProvider.watch(context)?.model;
     var sum = model?.planSum;
     var salary = model?.salary;
+
+    String haveToDone() => !(sum! >= 10000) ?'${10000 - sum!}' : 'You\'ve done plan))';
+
     return UnconstrainedBox(
       constrainedAxis: Axis.horizontal,
       child: Card(
           elevation: 10,
           child: Column(children: [
             Image.asset('assets/logo/logo.png'),
-            sizedBox25,
+            Statistics.sizedBox25,
             const Text("Month plan : 10000"),
-            sizedBox25,
+            Statistics.sizedBox25,
             Text('My current plan : $sum'),
-            sizedBox25,
+            Statistics.sizedBox25,
+            Text("${sum! < 10000 ? "Have to done: ${haveToDone()}" : haveToDone()} "),
+            Statistics.sizedBox25,
             Text('Earn : $salary'),
-            sizedBox25,
+            Statistics.sizedBox25,
             ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(PagesPath.history);
                 },
                 child: const Text('Look history')
             ),
-            sizedBox25
+            Statistics.sizedBox25
           ])),
     );
   }
 }
+
